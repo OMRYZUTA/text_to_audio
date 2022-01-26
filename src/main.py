@@ -1,7 +1,5 @@
 from gtts import *
-import sys
-
-NEEDED_ARGUMENTS = 3
+from engine.validators.arguments_validator import ArgumentsValidator
 
 
 def create_audio(file_path, result_file_name):
@@ -13,9 +11,6 @@ def create_audio(file_path, result_file_name):
         print("finished")
 
 
-def validate_arguments():
-    if len(sys.argv) != NEEDED_ARGUMENTS:
-        raise RuntimeError('invalid usage! usage = <text_file_path> <audio_file_name>')
 
 
 def parse_arguments():
@@ -24,7 +19,7 @@ def parse_arguments():
 
 if __name__ == "__main__":
     try:
-        validate_arguments()
+        ArgumentsValidator().validate()
         (text_file_path, audio_file_name) = parse_arguments()
         create_audio(text_file_path, audio_file_name)
     except RuntimeError as e:
