@@ -6,4 +6,4 @@ class ArgumentsValidator:
 
     def validate(self):
         if len(sys.argv) != self.REQUIRED_ARGUMENTS:
-            raise RuntimeError('invalid usage! usage = <text_file_path> <audio_file_name>')
+            raise RuntimeError(f"invalid usage! usage = <text_file_path> <audio_file_name> got {len(sys.argv)} params: {sys.argv[0]} ")
