@@ -1,4 +1,4 @@
-from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import *
 
 
 class Controller:
@@ -9,3 +9,9 @@ class Controller:
         file_path = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
         self.text_file_path = file_path
         return file_path
+
+    def get_path_for_audio_file(self):
+        f = asksaveasfilename(title="Select file", filetypes=(("mp3 files", "*.mp3"), ("all files", "*.*")))
+        print(f)
+        if f is None:  # asksaveasfile return `None` if dialog closed with "cancel".
+            return
