@@ -1,7 +1,7 @@
 from tkinter import *
 from src.ui.controllers.controller import Controller
 from src.engine.fetchers.text_fetcher import TextFetcher
-
+from  src.engine.audio_makers.audio_maker import AudioMaker
 
 class DesktopUI:
     def __init__(self, controller):
@@ -61,6 +61,9 @@ class DesktopUI:
 
     def save_as_audio(self):
         self.audio_file_path = self.controller.get_path_for_audio_file()
+        self.audio_file_path += '.mp3'
+        AudioMaker().create_audio_file_from_text(self.text, self.audio_file_path)
+
 
 
 if __name__ == '__main__':
