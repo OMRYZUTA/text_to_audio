@@ -5,7 +5,7 @@ from src.engine.validators.arguments_validator import ArgumentsValidator
 
 class ArgumentsValidatorTestCase(unittest.TestCase):
     def setUp(self):
-        sys.argv = ["main.py"]
+        sys.argv = ["make_audio.py"]
 
     def test_when_not_getting_required_params_raises_runtime_error(self):
         self.assertRaises(RuntimeError, ArgumentsValidator().validate)

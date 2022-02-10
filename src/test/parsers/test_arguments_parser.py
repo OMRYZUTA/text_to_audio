@@ -1,11 +1,11 @@
 import sys
 import pytest
-from src.engine.parsers.arguments_parser import ArgumentsParser
+from src.engine.parsers.cli_arguments_parser import CLIArgumentsParser
 
 
 @pytest.fixture
 def argument_parser():
-    return ArgumentsParser()
+    return CLIArgumentsParser()
 
 
 class TestCaseArgumentsParser:

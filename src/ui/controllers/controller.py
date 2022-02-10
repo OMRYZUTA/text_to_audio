@@ -1,7 +1,4 @@
-import tkinter as tk
 from tkinter.filedialog import askopenfilename
-from tkinter.filedialog import asksaveasfilename
-from tkinter.messagebox import showerror
 
 
 class Controller:
