@@ -1,6 +1,6 @@
 import sys
 import pytest
-from src.engine.parsers.ArgumentsParser import ArgumentsParser
+from src.engine.parsers.arguments_parser import ArgumentsParser
 
 
 @pytest.fixture
