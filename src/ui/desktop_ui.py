@@ -12,9 +12,6 @@ class DesktopUI:
         self.text_file_path = StringVar()
         self.build_main_frame()
         self.build_menu()
-        self.build_open_button()
-        self.build_save_as_audio_button()
-        self.build_path_label()
         self.build_text_area()
 
     def build_text_area(self):
@@ -42,24 +39,10 @@ class DesktopUI:
     def run(self):
         self.root.mainloop()
 
-    def build_open_button(self):
-        B = Button(text="Open", command=self.open_file)
-        B.pack()
-
     def open_file(self):
         self.text_file_path = self.controller.open_file()
-        self.file_path_label.config(text=self.text_file_path)
         self.text.set(TextFetcher().fetch_from_path(self.text_file_path))
-        self.update_text(self.text)
-
-    def build_path_label(self):
-        self.text_file_path = 'No file selected'
-        self.file_path_label = Label(self.root, text=self.text_file_path)
-        self.file_path_label.pack()
-
-    def build_save_as_audio_button(self):
-        B = Button(text="Save as Audio", command=self.save_as_audio)
-        B.pack()
+        self.update_text(self.text.get())
 
     def save_as_audio(self):
         self.audio_file_path = self.controller.get_path_for_audio_file()
