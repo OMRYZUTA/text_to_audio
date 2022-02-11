@@ -1,13 +1,14 @@
 from tkinter import *
 from src.ui.controllers.controller import Controller
 from src.engine.fetchers.text_fetcher import TextFetcher
-from  src.engine.audio_makers.audio_maker import AudioMaker
+from src.engine.audio_makers.audio_maker import AudioMaker
+
 
 class DesktopUI:
     def __init__(self, controller):
         self.controller = controller
-        self.text = ''
         self.root = Tk()
+        self.text = StringVar()
         self.text_file_path = StringVar()
         self.build_main_frame()
         self.build_menu()
@@ -47,7 +48,7 @@ class DesktopUI:
     def open_file(self):
         self.text_file_path = self.controller.open_file()
         self.file_path_label.config(text=self.text_file_path)
-        self.text = TextFetcher().fetch_from_path(self.text_file_path)
+        self.text.set(TextFetcher().fetch_from_path(self.text_file_path))
         self.update_text(self.text)
 
     def build_path_label(self):
@@ -62,8 +63,7 @@ class DesktopUI:
     def save_as_audio(self):
         self.audio_file_path = self.controller.get_path_for_audio_file()
         self.audio_file_path += '.mp3'
-        AudioMaker().create_audio_file_from_text(self.text, self.audio_file_path)
-
+        AudioMaker().create_audio_file_from_text(self.text_area.get("1.0", END), self.audio_file_path)
 
 
 if __name__ == '__main__':
