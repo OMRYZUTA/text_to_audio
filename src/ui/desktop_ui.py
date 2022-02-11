@@ -25,6 +25,7 @@ class DesktopUI:
         self.menu_bar = Menu(self.root)
         self.file_menu = Menu(self.menu_bar, tearoff=0)
         self.file_menu.add_command(label="Open", command=self.open_file)
+        self.file_menu.add_command(label="Save", command=self.save_as_audio)
         self.file_menu.add_command(label="Quit", command=self.root.quit)
         self.menu_bar.add_cascade(label="File", menu=self.file_menu)
         self.root.config(menu=self.menu_bar)
@@ -62,7 +63,8 @@ class DesktopUI:
 
     def save_as_audio(self):
         self.audio_file_path = self.controller.get_path_for_audio_file()
-        self.audio_file_path += '.mp3'
+        if not self.audio_file_path.endswith('.mp3'):
+            self.audio_file_path += '.mp3'
         AudioMaker().create_audio_file_from_text(self.text_area.get("1.0", END), self.audio_file_path)
 
 
