@@ -51,7 +51,7 @@ class DesktopUI:
         AudioMaker().create_audio_file_from_text(self.text_area.get("1.0", END), self.audio_file_path)
 
 
-if __name__ == '__main__':
+def main():
     controller = Controller()
     ui = DesktopUI(controller)
     ui.run()
