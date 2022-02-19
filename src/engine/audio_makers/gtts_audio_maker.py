@@ -1,7 +1,7 @@
 from gtts import gTTS
 
 
-class AudioMaker:
+class GttsAudioMaker:
     def __init__(self):
         self.lang = 'en'
         self.tld = 'ca'

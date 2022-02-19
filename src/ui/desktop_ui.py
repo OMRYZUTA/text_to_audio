@@ -1,11 +1,10 @@
 from tkinter import *
 from src.ui.controllers.controller import Controller
-from src.engine.fetchers.text_fetcher import TextFetcher
-from src.engine.audio_makers.audio_maker import AudioMaker
-
-
+from src.engine.engine import Engine
+import threading
 class DesktopUI:
     def __init__(self):
+        self.engine = Engine()
         self.root = Tk()
         self.controller = Controller()
         self.build_toolbar()
@@ -42,14 +41,14 @@ class DesktopUI:
 
     def open_file(self):
         self.text_file_path = self.controller.open_file()
-        self.text.set(TextFetcher().fetch_from_path(self.text_file_path))
+        self.text.set(self.engine.fetch_text_from_path(self.text_file_path))
         self.update_text(self.text.get())
 
     def save_as_audio(self):
         self.audio_file_path = self.controller.get_path_for_audio_file()
         if not self.audio_file_path.endswith('.mp3'):
             self.audio_file_path += '.mp3'
-        AudioMaker().create_audio_file_from_text(self.text_area.get("1.0", END), self.audio_file_path)
+        threading.Thread(target=self.engine.create_audio_file_from_text, args=(self.text_area.get("1.0", END), self.audio_file_path)).start()
 
     def build_toolbar(self):
         self.toolbar = Frame(self.root)
@@ -70,6 +69,8 @@ class DesktopUI:
             image=self.controller.get_image("save"))
         self.save_button.pack(side=LEFT, padx=0, pady=0)
 
+
 def main():
     ui = DesktopUI()
     ui.run()
+    print('done')
