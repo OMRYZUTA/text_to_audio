@@ -5,9 +5,10 @@ from src.engine.audio_makers.audio_maker import AudioMaker
 
 
 class DesktopUI:
-    def __init__(self, controller):
-        self.controller = controller
+    def __init__(self):
         self.root = Tk()
+        self.controller = Controller()
+        self.build_toolbar()
         self.text = StringVar()
         self.text_file_path = StringVar()
         self.build_main_frame()
@@ -21,8 +22,8 @@ class DesktopUI:
     def build_menu(self):
         self.menu_bar = Menu(self.root)
         self.file_menu = Menu(self.menu_bar, tearoff=0)
-        self.file_menu.add_command(label="Open", command=self.open_file)
-        self.file_menu.add_command(label="Save", command=self.save_as_audio)
+        self.file_menu.add_command(label="Open text file", command=self.open_file)
+        self.file_menu.add_command(label="Save as audio file", command=self.save_as_audio)
         self.file_menu.add_command(label="Quit", command=self.root.quit)
         self.menu_bar.add_cascade(label="File", menu=self.file_menu)
         self.root.config(menu=self.menu_bar)
@@ -50,8 +51,25 @@ class DesktopUI:
             self.audio_file_path += '.mp3'
         AudioMaker().create_audio_file_from_text(self.text_area.get("1.0", END), self.audio_file_path)
 
+    def build_toolbar(self):
+        self.toolbar = Frame(self.root)
+        self.toolbar.pack(side=TOP, fill=X)
+        self.open_button = Button(
+            self.toolbar,
+            relief=FLAT,
+            compound=LEFT,
+            command=self.open_file,
+            image=self.controller.get_image("open"))
+        self.open_button.pack(side=LEFT, padx=0, pady=0)
 
-if __name__ == '__main__':
-    controller = Controller()
-    ui = DesktopUI(controller)
+        self.save_button = Button(
+            self.toolbar,
+            relief=FLAT,
+            compound=LEFT,
+            command=self.save_as_audio,
+            image=self.controller.get_image("save"))
+        self.save_button.pack(side=LEFT, padx=0, pady=0)
+
+def main():
+    ui = DesktopUI()
     ui.run()

@@ -1,8 +1,11 @@
+from tkinter import PhotoImage
 from tkinter.filedialog import *
 
 
 class Controller:
     def __init__(self):
+        self.image_names = ["save","open"]
+        self.image_name_per_image_path = self.build_image_dict()
         self.text_file_path = None
 
     def open_file(self):
@@ -13,3 +16,14 @@ class Controller:
     def get_path_for_audio_file(self):
         f = asksaveasfilename(title="Select file", filetypes=(("mp3 files", "*.mp3"), ("all files", "*.*")))
         return f
+
+
+    def get_image(self, image_name):
+        return self.image_name_per_image_path[image_name]
+
+    def build_image_dict(self):
+        image_name_per_image_path = {}
+        for image_name in self.image_names:
+            image_path = "./src/ui/images/" + image_name + ".png"
+            image_name_per_image_path[image_name] = PhotoImage(file=image_path)
+        return image_name_per_image_path

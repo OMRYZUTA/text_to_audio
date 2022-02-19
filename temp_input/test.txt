@@ -1,2 +1,2 @@
-this is omry's program speaking
-ester is flaga
+install everything globally on the computer
+use python -m PyInstaller entry_point.py --name Text2Audio --onefile -w outside of the src folder
