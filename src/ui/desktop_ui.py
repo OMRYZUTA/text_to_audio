@@ -2,10 +2,13 @@ from tkinter import *
 from src.ui.controllers.controller import Controller
 from src.engine.engine import Engine
 import threading
+from playsound import playsound
+
 class DesktopUI:
     def __init__(self):
         self.engine = Engine()
         self.root = Tk()
+        self.root.attributes("-fullscreen", True)
         self.controller = Controller()
         self.build_toolbar()
         self.text = StringVar()
@@ -13,6 +16,14 @@ class DesktopUI:
         self.build_main_frame()
         self.build_menu()
         self.build_text_area()
+        self.state = True
+        self.root.resizable(True, True)
+        self.root.bind("<Escape>", self.end_fullscreen)
+
+    def end_fullscreen(self):
+        self.state = False
+        self.root.attributes("-fullscreen", False)
+        return "break"
 
     def build_text_area(self):
         self.text_area = Text(self.root)
@@ -29,7 +40,7 @@ class DesktopUI:
 
     def build_main_frame(self):
         self.root.title("Text To Speech")
-        self.root.geometry("400x300")
+        self.root.geometry("1000x800")
         self.root.resizable(0, 0)
 
     def update_text(self, text):
@@ -48,7 +59,11 @@ class DesktopUI:
         self.audio_file_path = self.controller.get_path_for_audio_file()
         if not self.audio_file_path.endswith('.mp3'):
             self.audio_file_path += '.mp3'
-        threading.Thread(target=self.engine.create_audio_file_from_text, args=(self.text_area.get("1.0", END), self.audio_file_path)).start()
+        threading.Thread(target=self.save_async_audio, args=(self.text_area.get("1.0", END), self.audio_file_path)).start()
+
+    def save_async_audio(self, text, audio_file_path):
+        self.engine.create_audio_file_from_text(text, audio_file_path)
+        playsound(self.controller.get_done_sound_path())
 
     def build_toolbar(self):
         self.toolbar = Frame(self.root)
@@ -67,6 +82,7 @@ class DesktopUI:
             compound=LEFT,
             command=self.save_as_audio,
             image=self.controller.get_image("save"))
+        print(self.controller.get_image("save"))
         self.save_button.pack(side=LEFT, padx=0, pady=0)
 
 

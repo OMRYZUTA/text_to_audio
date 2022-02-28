@@ -5,7 +5,7 @@ from src.engine.audio_makers.pyttsx3_audio_maker import TTSX3AudioMaker
 class Engine:
     def __init__(self):
         self.text_fetcher = TextFetcher()
-        self.audio_maker = TTSX3AudioMaker()
+        self.audio_maker = GttsAudioMaker()
 
     def fetch_text_from_path(self, path):
         return self.text_fetcher.fetch_from_path(path)
